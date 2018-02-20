@@ -11,7 +11,7 @@ from tensorflow.python.keras.layers import Dense
 from tensorflow.python.keras import optimizers
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 
-train_data_dir = "./data/cats_dogs/"
+train_data_dir = "./images/cats_dogs/"
 img_width, img_height = 224, 224
 epochs = 1
 
@@ -27,6 +27,7 @@ train_generator = train_datagen.flow_from_directory(
                         class_mode='categorical')
 
 # Step 2-1: Replace softmax Layer and add one dense layer
+# include top = false will remove the last softmax layer, remove 1000 neutron from the model
 base_model = VGG16(weights='imagenet', include_top=False)
 x = base_model.output
 x = GlobalAveragePooling2D()(x)
@@ -53,5 +54,5 @@ model.compile(loss='binary_crossentropy',
 model.fit_generator(train_generator,steps_per_epoch=10,epochs=epochs)
 
 # Save fine tuned weight
-model.save('./models/vgg16_cat_dog.h5')
+model.save('./model/vgg16_cat_dog.h5')
 

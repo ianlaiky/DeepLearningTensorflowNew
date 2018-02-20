@@ -10,8 +10,9 @@ from tensorflow.python.keras.preprocessing import image
 from tensorflow.python.keras.applications.resnet50 import ResNet50
 from tensorflow.python.keras.applications.resnet50 import preprocess_input,decode_predictions
 
+
 # Step 1: Preprocess data
-img = image.load_img("images/cobra.jpeg", target_size=(224, 224))
+img = image.load_img("./img/41cqodicvbl.jpg", target_size=(224, 224))
 
 # Convert the image to a numpy array
 img = image.img_to_array(img)
