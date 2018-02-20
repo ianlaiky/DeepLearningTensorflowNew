@@ -24,6 +24,10 @@ max_len = 80
 X_train = sequence.pad_sequences(X_train,maxlen=max_len,padding='pre', truncating='pre')
 X_test = sequence.pad_sequences(X_test,maxlen=max_len)
 
+#     Label     One Hot Encoded
+# neg 0     ->  [1 0]
+# pos 1     ->  [0 1]
+
 # One-hot encoding the labels
 n_classes = len(np.unique(y_train)) # n_classes = 2
 y_train = np.eye(n_classes)[y_train]
@@ -35,12 +39,16 @@ X = tf.placeholder('int32', [None, max_len])
 y = tf.placeholder('int32')
 W = tf.Variable(tf.truncated_normal([rnn_size, n_classes],stddev=0.1))
 B = tf.Variable(tf.truncated_normal([n_classes],stddev=0.1))
+
+# transform word into 128 vectors
 embeddings = tf.Variable(tf.random_uniform([max_words, embedding_size], -1.0, 1.0))
 
 # Step 2: Setup Model
 x_embedded = tf.nn.embedding_lookup(embeddings, X)
+# rnn cannot accept a matrix; this change the matrix to a array
 x_embedded = tf.unstack(x_embedded, axis=1)
 cell = rnn.BasicLSTMCell(rnn_size)
+# H = Hidden state, C = Cell state
 H, C = rnn.static_rnn(cell, x_embedded, dtype=tf.float32)
 
 Ylogits = tf.matmul(H[-1], W) + B

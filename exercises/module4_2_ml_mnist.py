@@ -14,7 +14,7 @@ tf.set_random_seed(25)
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("mnist", one_hot=True)
 
-X = tf.placeholder(tf.float32, [None, 784])
+X = tf.placeholder(tf.float32, [None, 784])#  vectorised to 1 row, hence accuracy is lost
 y = tf.placeholder(tf.float32, [None, 10])
 W = tf.Variable(tf.truncated_normal([784, 10],stddev=0.1))
 b = tf.Variable(tf.truncated_normal([10],stddev=0.1))

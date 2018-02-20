@@ -79,3 +79,6 @@ for epoch in range(training_epochs):
 test_data = {X:mnist.test.images,y:mnist.test.labels}
 print("Testing Accuracy = ", sess.run(accuracy, feed_dict = test_data))
 
+# step 7
+saver = tf.train.Saver()
+saver.save(sess,"../model/mnistCnn/mnist_cnn.ckpt.meta")
